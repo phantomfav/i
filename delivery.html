@@ -1,0 +1,271 @@
+<!doctype html> 
+<html lang="en"> 
+<head> 
+<meta charset="utf-8" /> 
+<meta name="viewport" content="width=device-width,initial-scale=1" /> 
+<title>Delivery Details — Flex Delivery</title> 
+<link 
+href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap
+ " rel="stylesheet"> 
+ 
+<style> 
+:root{ 
+  --bg:#f4f5f7; 
+  --card:#ffffff; 
+  --primary:#0f2b68; 
+  --accent:#f7931a; 
+  --muted:#6b7280; 
+  --light-border:#e5e8ed; 
+  --shadow:0 4px 12px rgba(0,0,0,0.06); 
+  --radius:12px; 
+} 
+*{box-sizing:border-box} 
+body{ 
+  margin:0; 
+  font-family:'Inter',sans-serif; 
+  background:var(--bg); 
+  color:#111; 
+} 
+a{text-decoration:none;color:inherit} 
+ 
+/* Layout grid (sidebar + main) */ 
+.layout{ 
+  display:grid; 
+  grid-template-columns:260px 1fr; 
+  gap:20px; 
+  padding:28px 20px; 
+} 
+.sidebar{ 
+  background:linear-gradient(180deg,var(--primary),#0b2a5a); 
+  color:white; 
+  border-radius:12px; 
+  padding:20px; 
+  display:flex; 
+  flex-direction:column; 
+} 
+.sidebar .brand{font-weight:700;font-size:18px;margin-bottom:16px;} 
+.sidebar nav{display:flex;flex-direction:column;gap:8px;font-size:14px;} 
+.sidebar nav .item{padding:10px;border-radius:8px;cursor:pointer;} 
+.sidebar nav .item.active{background:rgba(255,255,255,0.08);} 
+.sidebar .footer{margin-top:auto;font-size:12px;color:#c9daf9;margin-top:auto;} 
+/* Main section */ 
+main{ 
+display:flex; 
+flex-direction:column; 
+gap:20px; 
+} 
+/* Top bar */ 
+.topbar{ 
+background:#111827; 
+color:white; 
+border-radius:10px; 
+padding:14px 18px; 
+display:flex; 
+justify-content:space-between; 
+align-items:center; 
+} 
+.topbar h1{margin:0;font-size:18px;font-weight:700;} 
+.topbar small{display:block;color:#d1d5db;font-size:13px;font-weight:400;} 
+.topbar button{background:transparent;color:white;border:1px solid 
+rgba(255,255,255,0.2);border-radius:6px;padding:6px 10px;cursor:pointer;} 
+/* Card grid for top details */ 
+.details-grid{ 
+display:grid; 
+grid-template-columns:1.2fr 1fr 1fr; 
+gap:16px; 
+} 
+.card{ 
+background:var(--card); 
+border:1px solid var(--light-border); 
+border-radius:var(--radius); 
+box-shadow:var(--shadow); 
+padding:18px; 
+} 
+.card h3{margin-top:0;margin-bottom:12px;font-size:15px;font-weight:600;color:#111;} 
+.card table{width:100%;border-collapse:collapse;font-size:13px;color:#333;} 
+.card td{padding:6px 4px;vertical-align:top;} 
+.card td:first-child{color:var(--muted);width:140px;} 
+.card img{width:100%;border-radius:10px;margin-bottom:8px;} 
+.thumb-row{display:flex;gap:8px;margin-top:6px;} 
+.thumb-row img{width:24%;border-radius:8px;cursor:pointer;transition:all .2s;} 
+.thumb-row img:hover{transform:scale(1.03);} 
+/* Bottom grid for seller/buyer */ 
+.bottom-grid{ 
+  display:grid; 
+  grid-template-columns:repeat(3,1fr); 
+  gap:16px; 
+} 
+.user-card{display:flex;align-items:flex-start;gap:12px;} 
+.user-avatar{width:48px;height:48px;border-radius:50%;background:#ddd;} 
+.user-info h4{margin:0;font-size:14px;font-weight:600;} 
+.user-info small{color:var(--muted);font-size:12px;display:block;margin-top:2px;} 
+.user-info span{color:var(--accent);font-size:12px;font-weight:600;} 
+ 
+/* Footer views dropdown */ 
+.views{ 
+  background:var(--card); 
+  border:1px solid var(--light-border); 
+  border-radius:var(--radius); 
+  padding:14px 16px; 
+  box-shadow:var(--shadow); 
+  display:flex; 
+  justify-content:space-between; 
+  align-items:center; 
+  font-size:13px; 
+  color:var(--muted); 
+} 
+.views select{padding:8px 10px;border-radius:8px;border:1px solid 
+var(--light-border);background:white;} 
+ 
+/* Responsive */ 
+@media(max-width:1100px){ 
+  .layout{grid-template-columns:1fr;padding:16px;} 
+  .sidebar{flex-direction:row;overflow:auto;padding:12px;} 
+  .details-grid{grid-template-columns:1fr;} 
+  .bottom-grid{grid-template-columns:1fr;} 
+} 
+</style> 
+</head> 
+<body> 
+ 
+<div class="layout"> 
+ 
+  <!-- Sidebar --> 
+  <aside class="sidebar"> 
+    <div class="brand">FLEX<span style="color:var(--accent)">Delivery</span></div> 
+    <nav> 
+      <div class="item">Dashboard</div> 
+      <div class="item">Users</div> 
+      <div class="item">All Listings</div> 
+      <div class="item">Delivery Jobs</div> 
+      <div class="item">Delivery Offers</div> 
+      <div class="item">Marketplace</div> 
+      <div class="item active">Delivery Details</div> 
+    </nav> 
+    <div class="footer">Dev • v2.0</div> 
+  </aside> 
+ 
+  <!-- Main content --> 
+  <main> 
+    <!-- Topbar --> 
+    <div class="topbar"> 
+      <div> 
+        <h1>Delivery Details</h1> 
+        <small>Sell Ad: AD-1258 • Active</small> 
+      </div> 
+      <button onclick="window.history.back()">← Back</button> 
+    </div> 
+ 
+    <!-- Top details cards --> 
+    <section class="details-grid"> 
+      <!-- Left: Image section --> 
+      <div class="card"> 
+        <img src="https://via.placeholder.com/400x250?text=Main+Item+Image" alt="Item 
+image"> 
+        <div class="thumb-row"> 
+          <img src="https://via.placeholder.com/80?text=Img1" alt=""> 
+          <img src="https://via.placeholder.com/80?text=Img2" alt=""> 
+          <img src="https://via.placeholder.com/80?text=Img3" alt=""> 
+          <img src="https://via.placeholder.com/80?text=Img4" alt=""> 
+        </div> 
+      </div> 
+ 
+      <!-- Middle: Pickup & Delivery Details --> 
+      <div class="card"> 
+        <h3>Pick Up & Delivery Details</h3> 
+        <table> 
+          <tr><td>Created at</td><td>12th Oct 2025, 3:44 PM</td></tr> 
+          <tr><td>Expiry Date</td><td>14th Oct 2025, 11:00 PM</td></tr> 
+          <tr><td>Pickup Type</td><td>Personal drop off</td></tr> 
+          <tr><td>Delivery Type</td><td>Door Delivery</td></tr> 
+          <tr><td>Sender's Name</td><td>Bright Eyegbeheme</td></tr> 
+          <tr><td>Sender's Address</td><td>Egbeda, Lagos</td></tr> 
+          <tr><td>Sender's Phone</td><td>+234 812 345 6789</td></tr> 
+        </table> 
+      </div> 
+ 
+      <!-- Right: Package Details --> 
+      <div class="card"> 
+        <h3>Package Details</h3> 
+        <table> 
+          <tr><td>Title</td><td>New Samsung Galaxy S10</td></tr> 
+          <tr><td>Category</td><td>Electronics</td></tr> 
+          <tr><td>Product Category</td><td>Mobile Phones</td></tr> 
+          <tr><td>Weight</td><td>1.2kg</td></tr> 
+          <tr><td>Value</td><td>₦120,000</td></tr> 
+          <tr><td>Pickup Preference</td><td>Flexible</td></tr> 
+          <tr><td>Delivery Fee Invoice</td><td>Buyer</td></tr> 
+        </table> 
+      </div> 
+    </section> 
+ 
+    <!-- Bottom: Seller, Buyer, Notes --> 
+    <section class="bottom-grid"> 
+      <div class="card"> 
+        <h3>Seller</h3> 
+        <div class="user-card"> 
+          <div class="user-avatar"></div> 
+          <div class="user-info"> 
+            <h4>Bright Eyegbeheme</h4> 
+            <small>Joined: 2023</small> 
+            <span>4.9 ★</span> 
+          </div> 
+        </div> 
+        <hr style="border:none;border-top:1px solid var(--light-border);margin:10px 0;"> 
+        <table> 
+          <tr><td>Dispatch Address</td><td>Egbeda, Lagos</td></tr> 
+          <tr><td>Contact</td><td>+234 812 345 6789</td></tr> 
+        </table> 
+      </div> 
+ 
+      <div class="card"> 
+        <h3>Buyer</h3> 
+        <div class="user-card"> 
+          <div class="user-avatar"></div> 
+          <div class="user-info"> 
+            <h4>Justin Igwe</h4> 
+            <small>Joined: 2024</small> 
+            <span>4.7 ★</span> 
+          </div> 
+        </div> 
+        <hr style="border:none;border-top:1px solid var(--light-border);margin:10px 0;"> 
+        <table> 
+          <tr><td>Delivery Address</td><td>Ikeja, Lagos</td></tr> 
+          <tr><td>Contact</td><td>+234 803 987 6543</td></tr> 
+        </table> 
+      </div> 
+ 
+      <div class="card"> 
+        <h3>Notes</h3> 
+        <p style="font-size:13px;color:var(--muted)">No notes yet. Add internal remarks or 
+observations here.</p> 
+      </div> 
+    </section> 
+ 
+    <!-- Footer views --> 
+    <div class="views"> 
+      <div>Showing: Delivery overview</div> 
+      <div> 
+        <label for="viewSelect">Views:</label> 
+        <select id="viewSelect"> 
+          <option>Overview</option> 
+          <option>Payment Details</option> 
+          <option>Dispatch Info</option> 
+          <option>Communication Log</option> 
+        </select> 
+      </div> 
+    </div> 
+ 
+  </main> 
+</div> 
+ 
+<script> 
+// When opened from marketplace.html?id=### 
+const params = new URLSearchParams(window.location.search); 
+if(params.get('id')){ 
+  console.log("Loaded delivery for ID:", params.get('id')); 
+} 
+</script> 
+ 
+</body> 
+</html>

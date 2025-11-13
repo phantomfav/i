@@ -1,0 +1,324 @@
+<!doctype html> 
+<html lang="en"> 
+<head> 
+<meta charset="utf-8" /> 
+<meta name="viewport" content="width=device-width,initial-scale=1" /> 
+<title>Marketplace — Flex Delivery</title> 
+ 
+<!-- Inter font --> 
+<link 
+href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=s
+ wap" rel="stylesheet"> 
+ 
+<style> 
+  /* ---------- Root & Reset ---------- */ 
+  :root{ 
+    --bg: #f4f5f7; 
+    --card: #ffffff; 
+    --primary: #0f2b68;   /* deep blue */ 
+    --accent: #f7931a;    /* orange */ 
+    --muted: #6b7280; 
+    --light-border: #e8edf3; 
+    --radius: 12px; 
+    --shadow: 0 6px 18px rgba(12,20,40,0.06); 
+    --max-width: 1160px; 
+  } 
+  *{box-sizing:border-box} 
+  html,body{height:100%;margin:0;font-family:Inter,system-ui,-apple-system,Segoe 
+UI,Roboto,"Helvetica Neue",Arial;background:var(--bg);color:#111} 
+  a{color:inherit;text-decoration:none} 
+ 
+  /* ---------- Container/Layout ---------- */ 
+  .page { 
+    display:flex; 
+    justify-content:center; 
+    padding:28px 12px; 
+  } 
+  .stage { 
+    width:100%; 
+    max-width:var(--max-width); 
+    display:grid; 
+    grid-template-columns:260px 1fr; 
+    gap:22px; 
+  } 
+ 
+  /* ---------- Sidebar ---------- */ 
+  .sidebar { 
+    background:linear-gradient(180deg,var(--primary), #0b2a5a); 
+    color:white; 
+    border-radius:12px; 
+    padding:22px; 
+    display:flex; 
+    flex-direction:column; 
+    gap:14px; 
+    box-shadow: 0 8px 30px rgba(3,10,30,0.08); 
+    min-height:640px; 
+  } 
+  .brand { font-weight:700; font-size:18px; } 
+  .nav { display:flex; flex-direction:column; gap:8px; margin-top:6px; } 
+  .nav .item { 
+    padding:10px 12px; border-radius:10px; font-size:14px; cursor:default; opacity:.97; 
+  } 
+  .nav .item.active { background: rgba(255,255,255,0.06); font-weight:600; } 
+  .sidebar .dev { margin-top:auto; font-size:12px; color:#d6e6ff; } 
+ 
+  /* ---------- Main content ---------- */ 
+  .main { 
+    display:flex; flex-direction:column; gap:14px; 
+  } 
+  .topbar { 
+    display:flex; align-items:center; justify-content:space-between; 
+    background:#111827; color:white; border-radius:10px; padding:12px 16px; 
+  } 
+  .topbar .left{display:flex; gap:12px; align-items:center} 
+  .topbar .title{font-size:18px; font-weight:700} 
+  .topbar .right{display:flex; gap:8px; align-items:center} 
+ 
+  /* ---------- Card styles ---------- */ 
+  .card { background:var(--card); border-radius:var(--radius); padding:16px; 
+box-shadow:var(--shadow); border:1px solid var(--light-border); } 
+  .overview { display:flex; align-items:center; justify-content:space-between; gap:12px; 
+margin-bottom:12px; } 
+  .overview .metrics { display:flex; gap:12px; color:var(--muted); font-size:13px; } 
+  .filters { display:flex; gap:12px; align-items:center; flex-wrap:wrap; } 
+ 
+  /* ---------- Advanced filter (special card) ---------- */ 
+  .adv { border-radius:10px; border:1px solid #eef1f5; padding:12px; 
+background:linear-gradient(180deg,#ffffff,#fbfdff); } 
+  .adv-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:10px; margin-top:12px; } 
+  .adv-grid select, .adv-grid input { padding:10px; border-radius:8px; border:1px solid 
+var(--light-border); font-size:13px; background:#fff; } 
+  .adv-actions { display:flex; gap:10px; justify-content:flex-start; margin-top:10px; } 
+ 
+  /* ---------- Table ---------- */ 
+  .table-card { padding:6px 12px 16px 12px; } 
+  .table { width:100%; border-collapse:collapse; min-width:880px; } 
+  .table thead th { text-align:left; padding:12px; font-size:13px; color:var(--muted); 
+background:#fbfdff; border-bottom:1px solid var(--light-border); position:sticky; top:0; 
+z-index:1; } 
+  .table tbody td { padding:12px; border-bottom:1px solid #f4f6f8; font-size:14px; 
+vertical-align:middle; color:#111; } 
+  .row-actions .btn { padding:8px 10px; border-radius:8px; border:1px solid #e6e9f0; 
+background:white; font-size:13px; cursor:pointer; } 
+  .status-dot { display:inline-block; width:8px; height:8px; border-radius:999px; 
+background:#f59e0b; margin-right:8px; vertical-align:middle; } 
+ 
+  /* ---------- Small utilities ---------- */ 
+  .search { flex:1; min-width:200px; padding:10px 12px; border-radius:10px; border:1px solid 
+var(--light-border); background:#fafbfc } 
+  .controls { display:flex; gap:8px; align-items:center } 
+  .secondary { background:transparent; border:1px solid #e6e9f0; padding:8px 10px; 
+border-radius:8px; cursor:pointer; } 
+ 
+  /* ---------- Pagination ---------- */ 
+  .pager { display:flex; justify-content:space-between; align-items:center; padding-top:8px; 
+color:var(--muted); font-size:13px; } 
+ 
+  /* ---------- Responsive ---------- */ 
+  @media (max-width:1100px){ 
+    .stage { grid-template-columns: 1fr; padding:0 12px; } 
+    .sidebar { min-height:160px; flex-direction:row; overflow:auto; gap:8px; padding:12px; 
+align-items:center; } 
+    .main { padding-top:0; } 
+    .table { min-width:760px; } 
+  } 
+  @media (max-width:700px){ 
+    .adv-grid { grid-template-columns:repeat(2,1fr); } 
+    .table { min-width:650px; font-size:13px; } 
+  } 
+</style> 
+</head> 
+<body> 
+ 
+<div class="page"> 
+  <div class="stage"> 
+ 
+    <!-- Sidebar --> 
+    <aside class="sidebar" aria-label="sidebar"> 
+      <div class="brand">FLEX<span style="color:var(--accent)">Delivery</span></div> 
+ 
+      <nav class="nav" aria-label="main nav"> 
+        <div class="item">Dashboard</div> 
+        <div class="item">Users</div> 
+        <div class="item">All Listings</div> 
+        <div class="item">Delivery Jobs</div> 
+        <div class="item">Delivery Offers</div> 
+        <div class="item active">Marketplace</div> 
+        <div class="item">Flex Reward</div> 
+        <div class="item">Disputes</div> 
+        <div class="item">Transactions</div> 
+        <div class="item">User Support Ticket</div> 
+        <div class="item">Settings</div> 
+        <div class="item">Blog & Broadcast</div> 
+        <div class="item">Templates</div> 
+        <div class="item">Audit Logs</div> 
+      </nav> 
+ 
+      <div class="dev">Dev • v2.0</div> 
+    </aside> 
+ 
+    <!-- Main --> 
+    <main class="main"> 
+ 
+      <!-- Top bar --> 
+      <div class="topbar"> 
+        <div class="left"> 
+          <button style="background:transparent;border:1px solid 
+rgba(255,255,255,0.06);color:white;padding:8px;border-radius:8px;cursor:pointer">✕</butto
+ n> 
+          <div class="title">Marketplace</div> 
+        </div> 
+        <div class="right"> 
+          <div style="font-size:14px;color:#e5e7eb">Quick actions</div> 
+        </div> 
+      </div> 
+ 
+      <!-- Overview / Filters --> 
+      <section class="card"> 
+        <div class="overview"> 
+          <div> 
+            <h3 style="margin:0 0 8px 0;font-size:16px">Marketplace</h3> 
+            <div style="color:var(--muted);font-size:13px">Overview • Total created: 
+<strong>107</strong> • Total active: <strong>70</strong></div> 
+          </div> 
+          <div style="display:flex;gap:10px;align-items:center"> 
+            <button class="secondary" title="Export">Export</button> 
+          </div> 
+        </div> 
+ 
+        <!-- Search + quick controls --> 
+        <div style="display:flex;gap:12px;align-items:center;margin-bottom:12px;"> 
+          <input class="search" placeholder="Search assets" aria-label="Search assets" /> 
+          <div class="controls"> 
+            <button class="secondary">Reset</button> 
+            <button class="secondary">Sort</button> 
+            <button class="secondary">Advanced filter</button> 
+            <button class="secondary">Select Columns</button> 
+            <button class="secondary">Date</button> 
+          </div> 
+        </div> 
+ 
+        <!-- Advanced filter panel --> 
+        <div class="adv"> 
+          <div style="display:flex;justify-content:space-between;align-items:center"> 
+            <div style="font-weight:600;color:#374151">Advanced filter</div> 
+            <div style="font-size:13px;color:var(--muted)">Reset • Apply</div> 
+          </div> 
+ 
+          <div class="adv-grid"> 
+            <select><option>Item Title</option></select> 
+            <select><option>Location</option></select> 
+            <select><option>Ad Selling Mode</option></select> 
+            <select><option>Status</option></select> 
+ 
+            <input placeholder="From: Minimum Amount" /> 
+            <input placeholder="To: Maximum Amount" /> 
+            <input placeholder="Creation date from" /> 
+            <input placeholder="To" /> 
+          </div> 
+ 
+          <div class="adv-actions"> 
+            <button class="secondary">Reset</button> 
+            <button class="btn primary" style="padding:10px 
+14px;border-radius:8px;border:none;background:var(--accent);color:white">Apply 
+filter</button> 
+          </div> 
+        </div> 
+      </section> 
+ 
+      <!-- Table card --> 
+      <section class="card table-card"> 
+        <div style="overflow:auto"> 
+          <table class="table" role="table" aria-label="Marketplace table"> 
+            <thead> 
+              <tr> 
+                <th style="width:40px"><input type="checkbox" /></th> 
+                <th>Seller Name</th> 
+                <th style="width:120px">Asking Price</th> 
+                <th style="width:120px">Item Location</th> 
+                <th style="width:160px">Selling Mode</th> 
+                <th>Ad Title</th> 
+                <th style="width:140px">Creation Date</th> 
+                <th style="width:120px">Status</th> 
+                <th style="width:100px">Actions</th> 
+              </tr> 
+            </thead> 
+            <tbody id="marketRows"> 
+              <!-- populated by JS --> 
+            </tbody> 
+          </table> 
+        </div> 
+ 
+        <div class="pager" style="margin-top:12px"> 
+          <div> 
+            Items per page: 
+            <select style="margin-left:8px;padding:6px;border-radius:6px;border:1px solid 
+var(--light-border)"> 
+              <option>10</option><option>25</option><option>50</option> 
+            </select> 
+          </div> 
+          <div>1 - 10 of 50 • <button class="secondary">First</button> <button 
+class="secondary">Last</button></div> 
+        </div> 
+      </section> 
+ 
+    </main> 
+  </div> 
+</div> 
+ 
+<script> 
+  // Sample rows to mimic screenshot entries. 
+  const sampleRows = [ 
+    { id: 3, seller: 'Justin Igwe', price: '₦8,000', location: 'Egbeda', selling: 'P. Protection, D. Contact', title: 'Used Iphone 12', date: '12th Oct, 2025', status: 'Pending' }, 
+    { id: 556, seller: 'Yinka Adeboyi', price: '₦8,000', location: 'Egbeda', selling: 'P. Protection, D. Contact', title: 'New Fan Bosch', date: '12th Oct, 2025', status: 'Pending' }, 
+    { id: 88, seller: 'Jude Abaga', price: '₦8,000', location: 'Egbeda', selling: 'Payment Protection', title: 'Fairly Used phone', date: '12th Oct, 2025', status: 'Pending' }, 
+    { id: 89, seller: 'Bright Eyegbeheme', price: '₦8,000', location: 'Egbeda', selling: 'P. Protection, D. Contact', title: 'Car Tyres', date: '12th Oct, 2025', status: 'Pending' }, 
+    { id: 8, seller: 'Bright Eyegbeheme', price: '₦8,000', location: 'Egbeda', selling: 'Direct Contact', title: "Children's Cloth", date: '12th Oct, 2025', status: 'Pending' }, 
+    { id: 9, seller: 'Bright Eyegbeheme', price: '₦8,000', location: 'Egbeda', selling: 'P. Protection, D. Contact', title: 'Used Curtains', date: '12th Oct, 2025', status: 'Pending' }, 
+    { id: 97, seller: 'Bright Eyegbeheme', price: '₦8,000', location: 'Egbeda', selling: 'Payment Protection', title: 'Used Fridge', date: '12th Oct, 2025', status: 'Pending' }, 
+    { id: 4, seller: 'Bright Eyegbeheme', price: '₦8,000', location: 'Egbeda', selling: 'Payment Protection', title: 'New Freezer', date: '12th Oct, 2025', status: 'Pending' }, 
+    { id: 76, seller: 'Bright Eyegbeheme', price: '₦8,000', location: 'Egbeda', selling: 'Payment Protection', title: 'New Iphone XR', date: '12th Oct, 2025', status: 'Pending' }, 
+    { id: 78, seller: 'Bright Eyegbeheme', price: '₦8,000', location: 'Egbeda', selling: 'Direct Contact', title: 'New Watch', date: '12th Oct, 2025', status: 'Pending' } 
+  ]; 
+ 
+  function buildRow(row){ 
+    const tr = document.createElement('tr'); 
+    tr.innerHTML = ` 
+      <td><input type="checkbox" /></td> 
+      <td style="font-weight:600">${escapeHTML(row.seller)}</td> 
+      <td>${escapeHTML(row.price)}</td> 
+      <td>${escapeHTML(row.location)}</td> 
+      <td style="color:#374151">${escapeHTML(row.selling)}</td> 
+      <td>${escapeHTML(row.title)}</td> 
+      <td>${escapeHTML(row.date)}</td> 
+      <td><span class="status-dot" aria-hidden="true"></span><span 
+style="font-weight:600;color:#f97316">${escapeHTML(row.status)}</span></td> 
+      <td class="row-actions"><button class="btn" 
+onclick="openDetails(${row.id})">MORE</button></td> 
+    `; 
+    return tr; 
+  } 
+ 
+  function escapeHTML(s){ 
+    if(s === null || s === undefined) return ''; 
+    return String(s) 
+      .replaceAll('&','&amp;') 
+      .replaceAll('<','&lt;') 
+      .replaceAll('>','&gt;') 
+      .replaceAll('"','&quot;') 
+      .replaceAll("'",'&#39;'); 
+  } 
+ 
+  // inject rows 
+  const tbody = document.getElementById('marketRows'); 
+  sampleRows.forEach(r => tbody.appendChild(buildRow(r))); 
+ 
+  // placeholder openDetails: will navigate to delivery.html?id=... when we build that page 
+  function openDetails(id){ 
+    // open delivery page (if you have delivery.html in same folder) 
+    const url = `delivery.html?id=${encodeURIComponent(id)}`; 
+    window.location.href = url; 
+  } 
+</script> 
+</body> 
+</html>
